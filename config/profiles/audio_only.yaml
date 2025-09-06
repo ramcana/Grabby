@@ -1,0 +1,74 @@
+# Audio-Only Download Profile
+name: "audio_only"
+description: "Extract audio only from videos"
+version: "1.0"
+
+# Output settings
+output:
+  path: "./downloads/audio"
+  filename_template: "%(title)s.%(ext)s"
+  create_subdirs: true
+  organize_by_uploader: false
+
+# Quality settings
+quality:
+  video_format: null  # No video
+  audio_format: "best[ext=m4a]/best[ext=mp3]/best"
+  prefer_free_codecs: true
+  max_filesize: "100M"
+
+# Download options
+download:
+  concurrent_downloads: 5
+  max_retries: 3
+  retry_delay: 1.0
+  timeout: 30
+  rate_limit: null
+
+# Post-processing
+post_processing:
+  extract_audio: true
+  write_subtitles: false
+  write_thumbnail: true
+  write_info_json: true
+  embed_metadata: true
+  convert_format: "mp3"
+
+# Engine preferences
+engines:
+  preferred: "yt-dlp"
+  fallback_enabled: true
+  engine_specific:
+    yt_dlp:
+      use_aria2c: false
+      extract_flat: false
+
+# Platform-specific overrides
+platforms:
+  youtube:
+    quality:
+      audio_format: "best[ext=m4a]"
+  
+  soundcloud:
+    quality:
+      audio_format: "best[ext=mp3]"
+  
+  spotify:
+    engines:
+      preferred: "gallery-dl"
+
+# Filters and rules
+filters:
+  min_duration: 10  # Skip very short clips
+  max_duration: 3600  # Skip videos longer than 1 hour
+  skip_live_streams: true
+  skip_premieres: false
+  allowed_extensions: ["mp3", "m4a", "wav", "flac"]
+  blocked_uploaders: []
+
+# Notifications
+notifications:
+  on_start: false
+  on_complete: true
+  on_error: true
+  on_batch_complete: true

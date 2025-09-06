@@ -1,0 +1,84 @@
+# Default Download Profile
+name: "default"
+description: "Standard download settings for most videos"
+version: "1.0"
+
+# Output settings
+output:
+  path: "./downloads"
+  filename_template: "%(title)s.%(ext)s"
+  create_subdirs: false
+  organize_by_uploader: false
+
+# Quality settings
+quality:
+  video_format: "best[height<=1080]"
+  audio_format: "best"
+  prefer_free_codecs: false
+  max_filesize: null  # No limit
+
+# Download options
+download:
+  concurrent_downloads: 3
+  max_retries: 3
+  retry_delay: 1.0
+  timeout: 30
+  rate_limit: null  # No rate limiting
+
+# Post-processing
+post_processing:
+  extract_audio: false
+  write_subtitles: false
+  write_thumbnail: true
+  write_info_json: false
+  embed_metadata: true
+  convert_format: null
+
+# Engine preferences
+engines:
+  preferred: "auto"  # auto, yt-dlp, streamlink, gallery-dl, ripme
+  fallback_enabled: true
+  engine_specific:
+    yt_dlp:
+      use_aria2c: true
+      fragment_retries: 10
+    streamlink:
+      hls_timeout: 60
+    gallery_dl:
+      sleep_request: 1.0
+
+# Platform-specific overrides
+platforms:
+  youtube:
+    quality:
+      video_format: "best[height<=1080][fps<=60]"
+    post_processing:
+      write_subtitles: true
+  
+  twitch:
+    engines:
+      preferred: "streamlink"
+    quality:
+      video_format: "best"
+  
+  instagram:
+    engines:
+      preferred: "gallery-dl"
+    download:
+      rate_limit: "1M"  # 1MB/s rate limit
+
+# Filters and rules
+filters:
+  min_duration: null  # seconds
+  max_duration: null  # seconds
+  skip_live_streams: false
+  skip_premieres: false
+  allowed_extensions: []  # empty = all allowed
+  blocked_uploaders: []
+
+# Notifications
+notifications:
+  on_start: false
+  on_complete: true
+  on_error: true
+  on_batch_complete: true

@@ -1,0 +1,70 @@
+# Mobile-Friendly Download Profile
+name: "mobile_friendly"
+description: "Optimized for mobile devices with smaller file sizes"
+version: "1.0"
+
+# Output settings
+output:
+  path: "./downloads/mobile"
+  filename_template: "%(title)s.%(ext)s"
+  create_subdirs: false
+  organize_by_uploader: false
+
+# Quality settings
+quality:
+  video_format: "best[height<=720][filesize<100M]/best[height<=480]"
+  audio_format: "best[abr<=128]"
+  prefer_free_codecs: true
+  max_filesize: "100M"
+
+# Download options
+download:
+  concurrent_downloads: 2
+  max_retries: 3
+  retry_delay: 1.0
+  timeout: 30
+  rate_limit: "2M"  # 2MB/s to be mobile-friendly
+
+# Post-processing
+post_processing:
+  extract_audio: false
+  write_subtitles: false
+  write_thumbnail: true
+  write_info_json: false
+  embed_metadata: false
+  convert_format: "mp4"
+
+# Engine preferences
+engines:
+  preferred: "yt-dlp"
+  fallback_enabled: true
+  engine_specific:
+    yt_dlp:
+      use_aria2c: false
+      prefer_ffmpeg: true
+
+# Platform-specific overrides
+platforms:
+  youtube:
+    quality:
+      video_format: "best[height<=720][fps<=30]"
+  
+  tiktok:
+    quality:
+      video_format: "best[height<=720]"
+
+# Filters and rules
+filters:
+  min_duration: null
+  max_duration: 600  # 10 minutes max
+  skip_live_streams: true
+  skip_premieres: false
+  allowed_extensions: ["mp4", "webm"]
+  blocked_uploaders: []
+
+# Notifications
+notifications:
+  on_start: false
+  on_complete: true
+  on_error: true
+  on_batch_complete: true

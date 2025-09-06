@@ -1,0 +1,74 @@
+# High Quality Download Profile
+name: "high_quality"
+description: "Best quality downloads with all extras"
+version: "1.0"
+
+# Output settings
+output:
+  path: "./downloads/hq"
+  filename_template: "%(uploader)s - %(title)s [%(id)s].%(ext)s"
+  create_subdirs: true
+  organize_by_uploader: true
+
+# Quality settings
+quality:
+  video_format: "best[height>=1080]/best"
+  audio_format: "best[acodec!=none]"
+  prefer_free_codecs: false
+  max_filesize: null  # No limit for HQ
+
+# Download options
+download:
+  concurrent_downloads: 2  # Fewer concurrent for stability
+  max_retries: 5
+  retry_delay: 2.0
+  timeout: 60
+  rate_limit: null
+
+# Post-processing
+post_processing:
+  extract_audio: false
+  write_subtitles: true
+  write_thumbnail: true
+  write_info_json: true
+  embed_metadata: true
+  convert_format: null
+
+# Engine preferences
+engines:
+  preferred: "yt-dlp"
+  fallback_enabled: true
+  engine_specific:
+    yt_dlp:
+      use_aria2c: true
+      fragment_retries: 20
+      write_all_thumbnails: true
+
+# Platform-specific overrides
+platforms:
+  youtube:
+    quality:
+      video_format: "best[height>=1440]/best[height>=1080]/best"
+    post_processing:
+      write_subtitles: true
+      write_auto_subtitles: true
+  
+  vimeo:
+    quality:
+      video_format: "best[height>=1080]"
+
+# Filters and rules
+filters:
+  min_duration: null
+  max_duration: null
+  skip_live_streams: false
+  skip_premieres: false
+  allowed_extensions: []
+  blocked_uploaders: []
+
+# Notifications
+notifications:
+  on_start: true
+  on_complete: true
+  on_error: true
+  on_batch_complete: true

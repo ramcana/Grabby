@@ -1,0 +1,148 @@
+/* TUI Styles for Grabby */
+
+.title {
+    text-align: center;
+    text-style: bold;
+    color: $primary;
+    margin: 1;
+}
+
+.subtitle {
+    text-style: bold;
+    color: $secondary;
+    margin: 1 0;
+}
+
+.download_form {
+    padding: 1;
+    border: solid $primary;
+    margin: 1;
+}
+
+.controls {
+    height: 3;
+    margin: 1 0;
+}
+
+.switches {
+    height: 3;
+    margin: 1 0;
+}
+
+.queue_screen {
+    padding: 1;
+}
+
+.queue_controls {
+    height: 3;
+    margin: 1 0;
+}
+
+.history_screen {
+    padding: 1;
+}
+
+.settings_screen {
+    padding: 1;
+}
+
+.profiles_screen {
+    padding: 1;
+}
+
+.profiles_container {
+    height: 100%;
+}
+
+.profile_editor {
+    padding: 1;
+    border: solid $accent;
+    margin-left: 1;
+}
+
+/* Button styles */
+Button {
+    margin: 0 1;
+}
+
+Button.-primary {
+    background: $primary;
+    color: $text;
+}
+
+Button.-error {
+    background: $error;
+    color: $text;
+}
+
+/* Input styles */
+Input {
+    margin: 1 0;
+}
+
+/* DataTable styles */
+DataTable {
+    margin: 1 0;
+}
+
+/* Progress bar styles */
+ProgressBar {
+    margin: 1 0;
+}
+
+/* Tab styles */
+Tabs {
+    dock: top;
+}
+
+TabPane {
+    padding: 1;
+}
+
+/* Container styles */
+Container {
+    padding: 1;
+}
+
+ScrollableContainer {
+    padding: 1;
+}
+
+/* List styles */
+ListView {
+    border: solid $accent;
+    margin: 1;
+}
+
+ListItem {
+    padding: 0 1;
+}
+
+/* Collapsible styles */
+Collapsible {
+    margin: 1 0;
+    border: solid $accent;
+}
+
+/* Switch styles */
+Switch {
+    margin: 0 1;
+}
+
+/* Select styles */
+Select {
+    margin: 0 1;
+    min-width: 20;
+}
+
+/* Static text styles */
+Static {
+    margin: 1 0;
+}
+
+/* Log styles */
+Log {
+    border: solid $accent;
+    margin: 1;
+    height: 10;
+}

@@ -1,0 +1,85 @@
+version: '3.8'
+
+services:
+  # Redis for queue management
+  redis:
+    image: redis:7-alpine
+    container_name: grabby-redis
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    restart: unless-stopped
+
+  # PostgreSQL for persistent storage
+  postgres:
+    image: postgres:15-alpine
+    container_name: grabby-postgres
+    environment:
+      POSTGRES_DB: grabby
+      POSTGRES_USER: grabby
+      POSTGRES_PASSWORD: grabby_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./backend/database/migrations.sql:/docker-entrypoint-initdb.d/init.sql
+    restart: unless-stopped
+
+  # FastAPI backend
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: grabby-api
+    ports:
+      - "8000:8000"
+    environment:
+      - DATABASE_URL=postgresql://grabby:grabby_password@postgres:5432/grabby
+      - REDIS_URL=redis://redis:6379
+      - ENVIRONMENT=production
+    volumes:
+      - ./downloads:/app/downloads
+      - ./config:/app/config
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+  # Web frontend (React)
+  web:
+    build:
+      context: ./web
+      dockerfile: Dockerfile
+    container_name: grabby-web
+    ports:
+      - "3000:3000"
+    environment:
+      - REACT_APP_API_URL=http://localhost:8000
+      - REACT_APP_WS_URL=ws://localhost:8000
+    depends_on:
+      - api
+    restart: unless-stopped
+
+  # Celery worker for background tasks
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: grabby-worker
+    command: celery -A backend.core.celery_app worker --loglevel=info
+    environment:
+      - DATABASE_URL=postgresql://grabby:grabby_password@postgres:5432/grabby
+      - REDIS_URL=redis://redis:6379
+      - ENVIRONMENT=production
+    volumes:
+      - ./downloads:/app/downloads
+      - ./config:/app/config
+    depends_on:
+      - redis
+      - postgres
+    restart: unless-stopped
+
+volumes:
+  redis_data:
+  postgres_data:
