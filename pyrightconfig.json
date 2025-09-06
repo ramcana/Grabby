@@ -1,0 +1,24 @@
+{
+  "venvPath": ".",
+  "venv": "venv",
+  "include": [
+    "backend",
+    "cli",
+    "config", 
+    "desktop",
+    "tests",
+    "web/src"
+  ],
+  "exclude": [
+    "**/__pycache__",
+    "**/*.pyc",
+    "**/node_modules",
+    ".venv",
+    "build",
+    "dist"
+  ],
+  "reportMissingImports": true,
+  "reportMissingTypeStubs": false,
+  "pythonVersion": "3.11",
+  "typeCheckingMode": "basic"
+}
