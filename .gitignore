@@ -80,8 +80,22 @@ logs/
 *.db-journal
 config.json
 .env
+.env.*
 .env.local
+.env.development
+.env.staging
+.env.production
 grabby.db
+
+# Security sensitive files
+config/.env.*
+*.pem
+*.key
+*.crt
+*.p12
+secrets/
+keys/
+.secrets
 
 # Node.js (for web frontend)
 web/node_modules/
@@ -103,3 +117,6 @@ yarn-error.log*
 # Database files
 *.sqlite3
 *.db-journal
+config/.env.development
+config/.env.staging
+config/.env.production
